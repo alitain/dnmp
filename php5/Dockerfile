@@ -1,4 +1,4 @@
-FROM php:7-fpm-alpine3.7
+FROM php:5.6-fpm-alpine3.4
  
 COPY exts /tmp/php-exts
 
@@ -6,7 +6,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/' /etc/apk/repositories
 
 RUN apk add --no-cache autoconf gcc g++ make git
 
-RUN apk add --no-cache freetype libpng libjpeg-turbo libmcrypt libtool
+RUN apk add --no-cache freetype libpng libjpeg-turbo libmcrypt
 
 RUN docker-php-ext-install iconv pdo_mysql
 
@@ -23,14 +23,8 @@ RUN apk add --no-cache freetype-dev libpng-dev libjpeg-turbo-dev && \
   docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) gd && \
   apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
 
-RUN apk add --no-cache imagemagick-dev imagemagick\
-    && pecl install /tmp/php-exts/imagick*.tgz \
-    && docker-php-ext-enable imagick \
-    && apk del --no-cache imagemagick-dev 
-
 RUN apk add --no-cache libmcrypt-dev \
-    && pecl install /tmp/php-exts/mcrypt*.tgz \
-    && docker-php-ext-enable mcrypt \
+    && docker-php-ext-install mcrypt \
     && apk del --no-cache libmcrypt-dev
 
 RUN pecl install /tmp/php-exts/redis*.tgz /tmp/php-exts/mongodb*.tgz \
@@ -43,7 +37,9 @@ RUN apk add --no-cache wget \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && apk del wget
 
-RUN apk del autoconf gcc g++ make
+RUN adduser -D -u 1000 alitain
+
+USER alitain
 
 WORKDIR /var/www
 

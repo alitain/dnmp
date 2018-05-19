@@ -1,31 +1,35 @@
 version: '2'
 services:
   app:
-    image: tianon/true 
+    image: alitain/share 
     volumes:
       - ../apps/:/var/www
   nginx:
-    build:
-      context: ./nginx
+    image: alitain/nginx
     ports:
       - "80:80"
+      - "8080:8080"
     volumes:
       - ./nginx/sites:/etc/nginx/sites-available
     depends_on:
-      - php
+      - php5
+      - php7
     volumes_from:
       - app
-  php:
-    build:
-      context: ./php
+  php7:
+    image: alitain/php7
     volumes_from:
       - app
-  mysql:
-    build:
-      context: ./mysql
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./mysql/data:/var/lib/mysql
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes' 
+  php5:
+    image: alitain/php5
+    volumes_from:
+      - app
+#  mysql:
+#    image: alitain/mysql
+#    ports:
+#      - "3306:3306"
+#    user: mysql
+#    volumes:
+#      - ./mysql/data:/var/lib/mysql
+#    environment:
+#      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes' 
