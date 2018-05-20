@@ -43,12 +43,18 @@ RUN apk add --no-cache wget \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && apk del wget
 
+WORKDIR /var/www
+
+COPY php-entrypoint.sh /usr/local/bin
+
+RUN chmod +x /usr/local/bin/php-entrypoint.sh
+
 RUN adduser -D -u 1000 alitain
 
 USER alitain
 
-WORKDIR /var/www
-
-CMD ["php-fpm"]
+ENTRYPOINT ["php-entrypoint.sh"]
 
 EXPOSE 9000
+
+CMD ["php-fpm"]
