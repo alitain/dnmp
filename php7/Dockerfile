@@ -33,8 +33,8 @@ RUN apk add --no-cache libmcrypt-dev \
     && docker-php-ext-enable mcrypt \
     && apk del --no-cache libmcrypt-dev
 
-RUN pecl install /tmp/php-exts/redis*.tgz /tmp/php-exts/mongodb*.tgz /tmp/php-exts/xdebug*.tgz\
-    && docker-php-ext-enable redis mongodb xdebug
+RUN pecl install /tmp/php-exts/redis*.tgz /tmp/php-exts/mongodb*.tgz \
+    && docker-php-ext-enable redis mongodb
 
 RUN apk add --no-cache wget \
     && wget https://getcomposer.org/download/1.6.5/composer.phar \
