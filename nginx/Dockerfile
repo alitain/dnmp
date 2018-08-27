@@ -9,4 +9,4 @@ COPY ./upstream.conf /etc/nginx/conf.d/upstream.conf
 
 CMD ["nginx", "-g", "daemon off;"]
 
-EXPOSE 80
+EXPOSE 8080

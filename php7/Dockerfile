@@ -33,8 +33,8 @@ RUN apk add --no-cache libmcrypt-dev \
     && docker-php-ext-enable mcrypt \
     && apk del --no-cache libmcrypt-dev
 
-RUN pecl install /tmp/php-exts/redis*.tgz /tmp/php-exts/mongodb*.tgz \
-    && docker-php-ext-enable redis mongodb
+RUN pecl install /tmp/php-exts/redis*.tgz /tmp/php-exts/mongodb*.tgz /tmp/php-exts/xdebug*.tgz\
+    && docker-php-ext-enable redis mongodb xdebug
 
 RUN apk add --no-cache wget \
     && wget https://getcomposer.org/download/1.6.5/composer.phar \
@@ -42,6 +42,8 @@ RUN apk add --no-cache wget \
     && chmod +x /usr/local/bin/composer \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && apk del wget
+
+RUN echo -e 'xdebug.remote_enable=1\nxdebug.remote_host=host.docker.internal\nxdebug.remote_port=9000\nxdebug.idekey=PHPSTORM' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 RUN adduser -D -u 1000 alitain
 

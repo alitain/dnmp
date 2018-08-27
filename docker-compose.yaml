@@ -3,11 +3,10 @@ services:
   app:
     image: alitain/share 
     volumes:
-      - ../apps/:/var/www
+      - ../../code/alitain/:/var/www
   nginx:
     image: alitain/nginx
     ports:
-      - "80:80"
       - "8080:8080"
     volumes:
       - ./nginx/sites:/etc/nginx/sites-available
@@ -24,12 +23,12 @@ services:
     image: alitain/php5
     volumes_from:
       - app
-#  mysql:
-#    image: alitain/mysql
-#    ports:
-#      - "3306:3306"
-#    user: mysql
-#    volumes:
-#      - ./mysql/data:/var/lib/mysql
-#    environment:
-#      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes' 
+  mysql:
+    image: alitain/mysql
+    ports:
+      - "3306:3306"
+    user: mysql
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root 

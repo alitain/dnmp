@@ -37,6 +37,10 @@ RUN apk add --no-cache wget \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && apk del wget
 
+RUN pecl install /tmp/php-exts/xdebug*.tgz \
+    && docker-php-ext-enable xdebug \
+    && echo -e 'xdebug.remote_enable=1\nxdebug.remote_host=host.docker.internal\nxdebug.remote_port=9000\nxdebug.idekey=PHPSTORM' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
 RUN adduser -D -u 1000 alitain
 
 USER alitain
