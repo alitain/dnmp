@@ -23,9 +23,9 @@ Docker 使用的是 C/S 架构，分为 client 和 dockerd。
 ### 修改配置文件
 
 * Docker for Mac 或 Docker for Windows，"Preferences" > "Daemon" > "Insecure registries:" 添加不安全注册服务器地址（后期升级后，无需添加） `10.211.55.4:5000` ； "Registry Mirrors:" 添加私有镜像仓库地址 `http://10.211.55.4:5000` 和国内公有镜像地址 `https://registry.docker-cn.com`。如图所示
-  ![Docker Desktop 配置示意图](http://ohtd7tndv.bkt.clouddn.com/docker_for_mac_pref.png)
+  ![Docker Desktop 配置示意图](http://static.alitain.tech/docker_for_mac_pref.png)
 * Docker Toolbox 等，修改配置文件 `$HOME/.docker/machine/machines/default/config.json` ，找到数组配置项 `InsecureRegistry` 和 `RegistryMirror`添加响应的配置，如图所示
-  ![Docker Toolbox 配置示意图](http://ohtd7tndv.bkt.clouddn.com/docker_toolbox_config.png)
+  ![Docker Toolbox 配置示意图](http://static.alitain.tech/docker_toolbox_config.png)
   
   修改配置后需重启 dockerd ，执行 `docker info` 检查配置是否生效。
   
